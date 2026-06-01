@@ -5,7 +5,7 @@ import re
 
 def validate_id(id):
     if isinstance(id, str):
-        r = re.compile("(^(?!\-)[a-z0-9\-]+(?<!\-)$)")
+        r = re.compile(r"(^(?!-)[a-z0-9-]+(?<!-)$)")
         return id if r.match(id) else False
 
 
@@ -148,7 +148,7 @@ class Property_Base(object):
 
     def publish_tags(self, retain=True, qos=1):
         tags = ",".join(self.tags)
-        if tags is not "":
+        if tags != "":
             self.publish("/".join((self.topic, "$tags")), tags, retain, qos)
 
     def publish_meta(self, retain=True, qos=1):
@@ -222,8 +222,9 @@ class Property_Base(object):
 
         if value is not None:
             if self.validate_value(value):
-                self.value = value
+                # changing order so that changes in value can be handled in the set_value() function
                 self.set_value(value)  # call function to actually change the value
+                self.value = value
             else:
                 logger.warning(
                     "Payload value not valid for property for topic {}, payload is {}".format(
