@@ -89,7 +89,7 @@ class MQTT_Base(object):
 
     def _on_message(self, topic, payload, retain, qos):
         logger.debug(
-            "MQTT On Message: Topic {}, Payload {} Reatin {} QOS {}".format(
+            "MQTT On Message: Topic {}, Payload {} Retain {} QOS {}".format(
                 topic, payload, retain, qos
             )
         )
